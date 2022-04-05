@@ -51,7 +51,7 @@ Breadboards for Beginners: https://learn.adafruit.com/breadboards-for-beginners/
 
 Beyond Prototyping: https://docs.particle.io/tutorials/learn-more/beyond-prototyping/ 
 
-##Transmitter (node) sketch
+## Transmitter (node) sketch
 ### What this sketch does
 The Wemos Lolin ESP32 microcontroller stays in sleep mode unless woken up to collect soil temperature and moisture readings. It wakes up by 1) a push button or 2) at a specified interval of time tracked by the internal real time clock during sleep. As mentioned in the introduction, pressing the push button displays the data on an OLED screen; otherwise data is saved to an SD card or transmitted to a receiver for online viewing.
 ### Power supply
@@ -59,7 +59,13 @@ The Wemos Lolin32 has a battery connector and an internal voltage regulator desi
 ### Wiring connections:
 The diagram below shows breadboard connections between the ESP32, the two sensors, and the push button. This is shown to give you an idea of how to place items on a breadboard for testing. A full-size breadboard will accommodate other components as well. The tables below the diagram indicate pin connections for all parts of the circuit. 
 
+![SoilLoggerSensors](https://user-images.githubusercontent.com/69003593/161762021-66341a91-7dee-48f1-8450-97eaf2a11270.jpg)
 
+| DS3231 RTC |       | Lolin ESP32 |
+| :---:      | :---: | :---:       |
+| GND        |  ---> | GND         |
+| VCC/VIN    |  ---> | 3v3         |
+| Analog out |  ---> | 35          |
 
 
 
