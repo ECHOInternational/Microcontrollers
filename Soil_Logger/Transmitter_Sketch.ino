@@ -9,7 +9,7 @@ Code sources:
   Wakeup switch code by Pranav Cherukupalli: https://randomnerdtutorials.com/esp32-external-wake-up-deep-sleep/
 
   LoRa transceiver code based on content by Sandeep Mistry (https://github.com/sandeepmistry/arduino-LoRa) and 
-  Emmanuel Odunlade (https://www.electronics-lab.com/project/introduction-lora-send-data-two-arduino-using-lora/_
+  Emmanuel Odunlade (https://www.electronics-lab.com/project/introduction-lora-send-data-two-arduino-using-lora/)
 
   DS3231 coding, using just the Wire.h library, adapted from code by John Boxall:
   https://tronixstuff.com/2014/12/01/tutorial-using-ds1307-and-ds3231-real-time-clock-modules-with-arduino/
