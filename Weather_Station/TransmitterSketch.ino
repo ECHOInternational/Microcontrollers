@@ -263,7 +263,7 @@ void logWrite()
 
    //transmit the data to the receiver
    LoRa.beginPacket();
-   LoRa.print (Key); //the key that the transceiver needs
+   LoRa.print (Key); //enables inclusion of the key as part of data transmitted to the receiver
    LoRa.print (":");
    LoRa.print (Tips);
    LoRa.print (":");
