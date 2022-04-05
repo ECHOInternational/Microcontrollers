@@ -60,13 +60,84 @@ The Wemos Lolin32 has a battery connector and an internal voltage regulator desi
 The diagram below shows breadboard connections between the ESP32, the two sensors, and the push button. This is shown to give you an idea of how to place items on a breadboard for testing. A full-size breadboard will accommodate other components as well. The tables below the diagram indicate pin connections for all parts of the circuit. 
 
 ![SoilLoggerSensors](https://user-images.githubusercontent.com/69003593/161762021-66341a91-7dee-48f1-8450-97eaf2a11270.jpg)
-
-| DS3231 RTC |       | Lolin ESP32 |
+#### Capacitive soil moisture sensor
+| Soil sensor|       | Lolin ESP32 |
 | :---:      | :---: | :---:       |
 | GND        |  ---> | GND         |
 | VCC/VIN    |  ---> | 3v3         |
 | Analog out |  ---> | 35          |
 
+#### Temperature sensor (DS18B20)
+| DS18B20    |       | Lolin ESP32 |
+| :---:      | :---: | :---:       |
+| GND        |  ---> | GND         |
+| VCC/VIN    |  ---> | 3v3         |
+| DQ (Data)  |  ---> | 32          |
+
+#### Push button
+| Push button|       | Lolin ESP32 |
+| :---:      | :---: | :---:       |
+| Right pin  |  ---> | 15          |
+| Left pin   |  ---> | 3v3         |
+
+#### Micro SD card module
+| SD card module  |       | Lolin ESP32 |
+| :---:      | :---: | :---:       |
+| GND        |  ---> | GND         |
+| VCC/VIN    |  ---> | 3v3         |
+| CS (SS)*   |  ---> | 5           |
+| MOSI (DI)* |  ---> | 23          |
+| MISO (DO)* |  ---> | 19          |
+| CLK (SCK)* |  ---> | 18          |
+*Letters in parentheses indicate alternate pin labels, dpending on the supplier.
+
+#### External clock (DS3231 Real Time Clock [RTC]
+| DS3231 RTC |       | Lolin ESP32 |
+| :---:      | :---: | :---:       |
+| GND        |  ---> | GND         |
+| VCC/VIN    |  ---> | 3v3         |
+| SDA        |  ---> | 21          |
+| SCL        |  ---> | 22          |
+
+#### OLED display (128 x 64 pixel size)  
+| OLED       |       | Lolin ESP32 |
+| :---:      | :---: | :---:       |
+| GND        |  ---> | GND         |
+| VCC/VIN    |  ---> | 3v3         |
+| SDA        |  ---> | 21          |
+| SCL        |  ---> | 22          |
+
+#### LoRa transceiver
+| LoRa       |       | Lolin ESP32 |
+| :---:      | :---: | :---:       |
+| GND        |  ---> | GND         |
+| VCC/VIN    |  ---> | 3v3         |
+| GO/D1      |  ---> | 2           |
+| SCK        |  ---> | 18          |
+| MISO       |  ---> | 19          |
+| MOSI       |  ---> | 23          |
+| CS/NSS     |  ---> | 16          |
+
+## Receiver (gateway) sketch
+### What this sketch does
+This code equips an ESP8266 (NodeMcu 12-E) microcontroller to receive, via a LoRa RFM95 transceiver, LoRa transmitted soil temperature and moisture data from an ESP32 microcontroller in the field. Readings received by the transmitter are uploaded to Adafruit IO and/or Thingspeak web platforms for online viewing on a computer or mobile phone. Coding is included for both web platforms, since a free account can be set up with either. Readings are published online at the time interval specified in code for the transmitter in the field (ESP32 with connected sensors).
+
+### Power supply
+Supply power to the ESP8266 at all times, since the microcontroller is always awake to receive readings sent from the field. Place the ESP8266, with the LoRa transceiver connected, in a place where it can be connected to power and protected from rain or extreme temperatures. Power the the ESP8266 by connecting one end of a USB cable to the USB connector on the microcontroller and the other end of the cable to a 5-volt USB wall plug. 
+
+### Wiring connections
+Pin numbers defined in the sketch need to match the pins used in connecting the LoRa transceiver to the ESP8266. As with the transmitter, not all of the pins on the LoRa transceiver are used.
+
+#### LoRa transceiver
+| LoRa       |       | Lolin ESP32 |
+| :---:      | :---: | :---:       |
+| GND        |  ---> | GND         |
+| VCC/VIN    |  ---> | 3v3         |
+| GO/D1      |  ---> | DO          |
+| SCK        |  ---> | D5          |
+| MISO       |  ---> | D6          |
+| MOSI       |  ---> | D7          |
+| CS/NSS     |  ---> | D8          |
 
 
 
