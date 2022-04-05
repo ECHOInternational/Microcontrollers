@@ -1,35 +1,43 @@
-/*********
-  Modified from the examples of the Arduino LoRa library
-  More resources: https://randomnerdtutorials.com
-*********/
+/*
+Receiver sketch assembled by Tim Motis for receiving sensor values from the field (transmitter) and publishing
+data to a web platform, Thingspeak, for online viewing.
+
+LoRa code modified from the examples of the Arduino LoRa library
+More resources: https://randomnerdtutorials.com
+
+Thingspeak portion adapted from code by:
+  The Mathworks, Inc.: https://github.com/mathworks/thingspeak-arduino/blob/master/examples/ESP8266/program%20board%20directly/WriteMultipleFields/WriteMultipleFields.ino
+  benjineer.io: https://www.instructables.com/Tutorial-2-Remote-Relay-Node/
+
+  To set up a Thingspeak account, visit https://thingspeak.com/ and click on the "Get Started for Free" tab. This will give you a "Write API Key" needed in the sketch.
+*/
+
+// LIBRARIES
 #include <ESP8266WiFi.h>
 #include <LoRa.h>
 #include <Adafruit_Sensor.h>
 #include <ThingSpeak.h>
 
+// DEFINITIONS OF VARIABLES AND PINS
+String apiKey = "Your_Write_API_Key";     //  Here and in the line below enter, between the quotation marks, your Write API key from ThingSpeak
+const char * myWriteAPIKey = "Your_Write_API_Key";  
 
-String apiKey = "VYTZPAQ1TKPN809W";     //  Enter your Write API key from ThingSpeak
-const char * myWriteAPIKey = "VYTZPAQ1TKPN809W";
-
-//const char *ssid =  "Hera";     // replace with your wifi ssid and wpa2 key
-//const char *pass =  "MangoMadness@239";
-//const char* server = "api.thingspeak.com";
-
-const char *ssid =  "ECHO - Staff";     // replace with your wifi ssid and wpa2 key
-const char *pass =  "Durrance17391RD";
+const char *ssid =  "Your_WiFi_SSID";     // replace with your wifi ssid 
+const char *pass =  "Your_WiFi_Password"; // replace with your wifi password
 const char* server = "api.thingspeak.com";
+unsigned long myChannelNumber = 596676;
 
-//define the pins used by the transceiver module
+//define the pins used by the transceiver module; wiring needs to match (e.g., connect SS pin on the LoRa transceiver to pin D8 on the ESP8266 [NodeMcu])
 #define ss D8
 #define dio0 D1
 
-unsigned long myChannelNumber = 596676;
-
-String myStatus = "";
+String myStatus = ""; //not sure if this is actually needed; feel free to experiment with and without this
 
 int LoRaData;
  
 WiFiClient client;
+
+// #### SETUP ####################################################
 
 void setup() {
   //initialize Serial Monitor
@@ -54,6 +62,7 @@ void setup() {
   LoRa.setSyncWord(0xF3);
   Serial.println("LoRa Initializing OK!");
 
+  // Initialize WiFi and Thingspeak
   WiFi.begin(ssid, pass);
    
   while (WiFi.status() != WL_CONNECTED) 
@@ -68,7 +77,7 @@ void setup() {
 
 
 void loop() {
-  // try to parse packet
+  // try to parse incoming data packet received from the transmitter
   int packetSize = LoRa.parsePacket();
   if (packetSize) {
     // received a packet
@@ -86,7 +95,7 @@ void loop() {
       // Connect or reconnect to WiFi
       if(WiFi.status() != WL_CONNECTED){
         Serial.print("Attempting to connect to SSID: ");
-        Serial.println("ECHO - Staff");
+        Serial.println("Your_WiFi_SSID"); // replace with your wifi ssid 
         while(WiFi.status() != WL_CONNECTED){
           WiFi.begin(ssid, pass); // Connect to WPA/WPA2 network. Change this line if using open or WEP network
           Serial.print(".");
@@ -99,46 +108,15 @@ void loop() {
 
       Serial.println("LoRaData String:");
       Serial.println(LoRaData);
-      const int key = 9876;
+      const int key = 9876;  //these numbers should match that of the key specified in the transmitter sketch
       
       String strKey = getValue(LoRaData, ':', 0);
       String strTips = getValue(LoRaData, ':', 1);
       String strRainCm = getValue(LoRaData, ':', 2);
       String strTemp = getValue(LoRaData, ':', 3);
       String strHum = getValue(LoRaData, ':', 4);
-      
-      //Serial.println("Extracted String");
-      //Serial.println(strPctShade);
-      //Serial.println(strLum1);
-      //Serial.println(strLum2);
-      //Serial.println(strLum3);
-      //Serial.println(strLum4);
-      
+               
       int intKey = strKey.toInt();
-      //int intLum1 = strLum1.toInt();
-      //int intLum2 = strLum2.toInt();
-      //int intLum3 = strLum3.toInt();
-      //int intLum4 = strLum4.toInt();
-
-      //Serial.println("Converted to ints");
-      //Serial.println(intPctShade);
-      //Serial.println(intLum1);
-      //Serial.println(intLum2);
-      //Serial.println(intLum3);
-      //Serial.println(intLum4);
-
-      //float floatPctShade = (float)intPctShade / 100;
-      //float floatLum1 = (float)intLum1 / 100;
-      //float floatLum2 = (float)intLum2 / 100;
-      //float floatLum3 = (float)intLum3 / 100;
-      //float floatLum4 = (float)intLum4 / 100;
-
-      //Serial.println("converted to floats");
-      //Serial.println(floatPctShade);
-      //Serial.println(floatLum1);
-      //Serial.println(floatLum2);
-      //Serial.println(floatLum3);
-      //Serial.println(floatLum4);
       if (intKey == key) { 
       ThingSpeak.setField(1, strTips);
       ThingSpeak.setField(2, strRainCm);
@@ -163,6 +141,7 @@ void loop() {
   }
 }
 
+// Break string values into separate fields to post on Thingspeak;
 String getValue(String data, char separator, int index)
 {
     int found = 0;
