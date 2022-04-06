@@ -7,7 +7,7 @@ The Arduino Nano, placed in the seed storage room, collects hourly temperature a
 
 LoRa radio signals can travel further with no obstructions. In this case, the signal has to pass through the metal walls of the shipping container in which the seeds are stored and through a window of an adjacent building where the receiver is located. Despite the obstructions, readings are rarely missed. 
 
-Incoming data is processed by the receiver to 1) display the data on an OLED screen and 2) post the data to a web platform called Adafruit IO. With an Adafruit IO account you can set up a visual dashboard to display data in real time in (e.g., graphs and gauges, dependding on preference). The Adafruit dashboard can be viewed on a smartphone or computer. Using an online service called If This Then That (IFTTT), a "trigger" was set up to email an alert if the temperature exceeds 60 degrees Fahrenheeit (since the CoolBot device used to cool the room normally keeps the room at 50 degrees F when working propoerly). Instructions for setting up an IFTTT trigger in conjunction with Adafruit IO are here: https://learn.adafruit.com/using-ifttt-with-adafruit-io/ifttt-to-adafruit-io-setup
+Incoming data is processed by the receiver to 1) display the data on an OLED screen and 2) post the data to a web platform called Adafruit IO. With an Adafruit IO account you can set up a visual dashboard to display data in real time in (e.g., graphs and gauges) for viewing on a smartphone or computer. Using an online service called If This Then That (IFTTT), we set up a "trigger" to email an alert if the temperature exceeds 60 degrees Fahrenheeit (since the CoolBot device used to cool the room normally keeps the room at 50 degrees F when working propoerly). Instructions for setting up an IFTTT trigger in conjunction with Adafruit IO are here: https://learn.adafruit.com/using-ifttt-with-adafruit-io/ifttt-to-adafruit-io-setup
 
 ## Hardware list
 * An Arduino Nano
@@ -50,5 +50,25 @@ The transmitter consists of an Arduino Nano powered with a 5-volt USB wall plug.
 The receiver is an ESP8266/NodeMCU 12-E microcontroller. It has WiFi capability and is, thus, used to post incoming data to the internet. It also displays time-stamped data on a 128 X 64 pixel OLED display. In the receiver sketch, the LoRa transceiver is configured to act as a receiver instead of a transmitter. 
 
 ### Wiring
-The two components to connect to the microcontroller  are the OLED display and LoRa transceiver. 
+The two components to connect to the microcontroller are the OLED display and LoRa transceiver.
+### OLED display
+| SHT31 sensor   |      |  Arduino Nano   |
+| :---:          |:---: |  :---:          |
+| GND            | ---> |  GND            |
+| VCC            | ---> |  3v3            |
+| SDA            | ---> |  D2             |
+| SCL            | ---> |  D1             |
+
+#### LoRa transceiver
+| LoRa           |       | Arduino Nano   |
+| :---:          | :---: | :---:          |
+| GND            |  ---> | GND            |
+| VCC/VIN        |  ---> | 3v3            |
+| GO/D1          |  ---> | D0             |
+| SCK            |  ---> | D5             |
+| MISO           |  ---> | D6             |
+| MOSI           |  ---> | D7             |
+| CS/NSS         |  ---> | D8             |
+
+
 
