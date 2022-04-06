@@ -14,7 +14,7 @@ The weather station itself is out of range of WiFi (internet). Thus the data are
 * A tipping bucket rain sensor with a reed switch; the station at ECHO uses an old RainWise sensor, but you could also purchase an inexpensive Misol sensor sold as a replacement part for weather stations; the long length of wire it comes with is already connected to the reed switch inside, and you can cut the connector off at the end to access the two wires.
 * Hardware debouncing parts (there is some code for software debouncing, making these parts optional but a potentially significant improvement)
   * A Schmitt trigger (SN74LS14N) that operates at 5 volts: https://www.aliexpress.com/item/1005003483691039.html?spm=a2g0o.productlist.0.0.3cb92cecWMwbcT&algo_pvid=50ee4675-446e-48ef-a2df-707a0f9ed6e6&algo_exp_id=50ee4675-446e-48ef-a2df-707a0f9ed6e6-5&pdp_ext_f=%7B%22sku_id%22%3A%2212000025991879251%22%7D&pdp_pi=-1%3B0.76%3B-1%3B-1%40salePrice%3BUSD%3Bsearch-mainSearch
-  * A 10 Kohm resistor
+  * A 10 Kohm resistor  (resister kits are available with an assortment of resisters you might need for this or other projects)
   * A 100 ohm resistor
   * A 10 uf capacitor
   * See this video for information on the benefits of and how to wire a Schmitt trigger into your rain gauge circuit: https://www.youtube.com/watch?v=KHrTqdmYoAk&t=872s
@@ -25,6 +25,10 @@ The weather station itself is out of range of WiFi (internet). Thus the data are
                 https://www.aliexpress.com/item/4000087101515.html?spm=a2g0o.productlist.0.0.70975ffdFQOVok&algo_pvid=c92fc316-1fc7-4482-a170-65c9f3ff0f4c&algo_exp_id=c92fc316-1fc7-4482-a170-65c9f3ff0f4c-1&pdp_ext_f=%7B%22sku_id%22%3A%2210000000232313748%22%7D&pdp_pi=-1%3B0.54%3B-1%3B-1%40salePrice%3BUSD%3Bsearch-mainSearch
   * Four 18650 3.7 volt lithium ion batteries
   * A battery holder for the above batteries that allows them to be connected in parrallel (so that the voltage coming out of the battery holder is close to 3.7 volts)
-* Schmitt trigger and related parts  
+* Fabrication items: wires, solder, materials you may have on hand to build an enclosure for the Arduino Nano  
+
+## Transmitter
+
+If 
 
 
