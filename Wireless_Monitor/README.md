@@ -12,7 +12,8 @@ Incoming data is processed by the receiver to 1) display the data on an OLED scr
 ## Hardware list
 * An Arduino Nano
 * An ESP8266/NodeMCU-12E
-* Two LoRa transceiver radios (this programming works with RFM95 radios; select a version capable of transmitting at a licence-free frequency [e.g., 915, 433 mhz)
+* Two LoRa transceiver radios (this programming works with RFM95 radios; select a version capable of transmitting at a licence-free frequency for your country
+* An OLED display (128 X 64 pixels)
 
 ## Transmitter
 The transmitter consists of an Arduino Nano powered with a 5-volt USB wall plug. A temperature/humidity sensor (SHT31) is connected to the microcontroller, as well as an external clock (DS3231). The purpose of the clock is to generate a time stamp for each reading. A time stamp is not necessary for viewing data online, since Adafruit IO shows the time each reading was received. However, it is useful to see the time stamp on the OLED display on the receiver, since it provides a quick visual way to make sure that the transmitter is working; if the time of the last reading shown on the OLED is not within an hour of the current time, a reading was missed. In the transmitter sketch, the LoRa transceiver is configured to act as a radio transmitter.
@@ -27,8 +28,8 @@ The transmitter consists of an Arduino Nano powered with a 5-volt USB wall plug.
 | SDA            | ---> |  A4             |
 | SCL            | ---> |  A5             |
 
-### External clock
-| SHT31 sensor   |      |  Arduino Nano   |
+### External real-time clock (RTC)
+| DS3231 RTC     |      |  Arduino Nano   |
 | :---:          |:---: |  :---:          |
 | GND            | ---> |  GND            |
 | VCC            | ---> |  5v             |
