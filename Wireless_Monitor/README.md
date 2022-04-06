@@ -30,4 +30,16 @@ The transmitter consists of an Arduino Nano powered with a 5-volt USB wall plug.
 | SDA            | ---> |  A4             |
 | SCL            | ---> |  A5             |
 
+#### LoRa transceiver
+| LoRa       |       | Arduino Nano|
+| :---:      | :---: | :---:       |
+| GND        |  ---> | GND         |
+| VCC/VIN    |  ---> | 3v3         |
+| GO/D1      |  ---> | 3           |
+| SCK        |  ---> | 18          |
+| MISO       |  ---> | 12          |
+| MOSI       |  ---> | 11          |
+| CS/NSS     |  ---> | 8           |
+
+
 
