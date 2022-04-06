@@ -28,7 +28,35 @@ The weather station itself is out of range of WiFi (internet). Thus the data are
 * Fabrication items: wires, solder, materials you may have on hand to build an enclosure for the Arduino Nano  
 
 ## Transmitter
+This consists of an Arduino Nano with sensors (a rain and temperature/humidity sensor) and other components (RTC clock, MicroSD card, and LoRa transceiver) connected to it. 
+### Wiring
+#### Temperature/humidity sensor
+| SHT31 sensor   |      |  Arduino Nano   |
+| :---:          |:---: |  :---:          |
+| GND            | ---> |  GND            |
+| VCC            | ---> |  5v             |
+| SDA            | ---> |  A4             |
+| SCL            | ---> |  A5             |
 
-If 
+### External real-time clock (RTC)
+| DS3231 RTC     |      |  Arduino Nano   |
+| :---:          |:---: |  :---:          |
+| GND            | ---> |  GND            |
+| VCC            | ---> |  5v             |
+| SDA            | ---> |  A4             |
+| SCL            | ---> |  A5             |
+
+#### LoRa transceiver
+| LoRa           |       | Arduino Nano   |
+| :---:          | :---: | :---:          |
+| GND            |  ---> | GND            |
+| VCC/VIN        |  ---> | 3v3            |
+| GO/D1          |  ---> | 3              |
+| SCK            |  ---> | 18             |
+| MISO           |  ---> | 12             |
+| MOSI           |  ---> | 11             |
+| CS/NSS         |  ---> | 10             |
+
+ 
 
 
