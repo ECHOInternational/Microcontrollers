@@ -7,7 +7,7 @@ Code assembled by Tim Motis from various sources:
   
  */
 
-// #### Includes #################################################
+// LIBRARIES
 
 #include <Wire.h>
 #include <RTClib.h>
