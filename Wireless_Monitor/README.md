@@ -51,7 +51,7 @@ The receiver is an ESP8266/NodeMCU 12-E microcontroller. It has WiFi capability 
 
 ### Wiring
 The two components to connect to the microcontroller are the OLED display and LoRa transceiver.
-### OLED display
+#### OLED display
 | SHT31 sensor   |      |  Arduino Nano   |
 | :---:          |:---: |  :---:          |
 | GND            | ---> |  GND            |
@@ -70,5 +70,9 @@ The two components to connect to the microcontroller are the OLED display and Lo
 | MOSI           |  ---> | D7             |
 | CS/NSS         |  ---> | D8             |
 
+#### Programming tip
+The Adafruit IO portions of the receiver sketch draw on Adafruit IO account and WiFi information from the configAdafruit_IO.h sketch. In Arduino IDE software, on a new file page, copy/paste the receiver sketch. Then create a new tab for the configAdafruit_IO.h sketch. Create the second tab by clicking the drop down arrow near the top, right-hand side of the page. Name the newly created tab (you will be prompted to do this near the bottom right of the screen) and then copy/paste the configAdafruit_IO.h coding into the resulting page. Below is a screenshot of what it should look like when you are done. An orange circle indicates the drop down arrow to click on to add a new tab. The green shading indicates two places where the name of the configuration file appear; make sure those are spelled the same in both places.
+
+![ScreenShotConfigMarked](https://user-images.githubusercontent.com/69003593/162020955-25247d16-91ca-42fb-8d8e-189885afed87.jpg)
 
 
