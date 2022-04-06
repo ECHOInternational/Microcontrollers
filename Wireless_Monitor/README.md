@@ -10,3 +10,24 @@ LoRa radio signals can travel further with no obstructions. In this case, the si
 Incoming data is processed by the receiver to 1) display the data on an OLED screen and 2) post the data to a web platform called Adafruit IO. With an Adafruit IO account you can set up a visual dashboard to display data in real time in (e.g., graphs and gauges, dependding on preference). The Adafruit dashboard can be viewed on a smartphone or computer. Using an online service called If This Then That (IFTTT), a "trigger" was set up to email an alert if the temperature exceeds 60 degrees Fahrenheeit (since the CoolBot device used to cool the room normally keeps the room at 50 degrees F when working propoerly). Instructions for setting up an IFTTT trigger in conjunction with Adafruit IO are here: https://learn.adafruit.com/using-ifttt-with-adafruit-io/ifttt-to-adafruit-io-setup
 
 ## Transmitter
+The transmitter consists of an Arduino Nano powered with a 5-volt USB wall plug. A temperature/humidity sensor (SHT31) is connected to the microcontroller, as well as an external clock (DS3231). The purpose of the clock is to generate a time stamp for each reading. A time stamp is not necessary for viewing data online, since Adafruit IO shows the time each reading was received. However, it is useful to see the time stamp on the OLED display, since it provides a quick visual way to make sure that the transmitter is working; if the time of the last reading shown on the OLED is not within an hour of the current time, a reading was missed. 
+
+### Wiring
+
+#### Temperature/humidity sensor
+| SHT31 sensor   |      |  Arduino Nano   |
+| :---:          |:---: |  :---:          |
+| GND            | ---> |  GND            |
+| VCC            | ---> |  5v             |
+| SDA            | ---> |  A4             |
+| SCL            | ---> |  A5             |
+
+### External clock
+| SHT31 sensor   |      |  Arduino Nano   |
+| :---:          |:---: |  :---:          |
+| GND            | ---> |  GND            |
+| VCC            | ---> |  5v             |
+| SDA            | ---> |  A4             |
+| SCL            | ---> |  A5             |
+
+
