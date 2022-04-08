@@ -26,7 +26,7 @@ Code related to debouncing of the reed swtich was sourced from: https://www.yout
 // SD card 
 #define MOSIpin 11
 #define MISOpin 12
-const int chipSelect = 4;
+const int chipSelect = 4; //the CS/SS pin for the microSD card module
 File logFile;
 File backupFile;
 
