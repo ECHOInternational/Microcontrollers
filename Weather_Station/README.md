@@ -121,9 +121,26 @@ Incoming data are sent to a web platform called Thingspeak. You will need to go 
 | MISO           |  ---> | D6             |
 | CS/NSS         |  ---> | D8             |
 
+## Build photos
+The weather station as a whole:
+![RainGaugeAT](https://user-images.githubusercontent.com/69003593/162528707-3d216195-2819-41f8-b4a7-e936541656bd.jpg)
+
+The Wood enclosure with a wooden cap, all surrounded with thin metal sheeting
+![IMG-0652](https://user-images.githubusercontent.com/69003593/162528847-5f0ea7ba-f3cb-4fc4-8700-e5d1bb569d29.jpg)
+
+Wood enclosure with cap/lid removed:
+![IMG-0656](https://user-images.githubusercontent.com/69003593/162528898-4ab8b972-6482-4aea-a2bd-d50c5bd58289.jpg)
+
+Bottom of enclosure with wires from rain and temperature/humidity sensor coming in and red antenanna (for LoRa transmitter) protruding out:
+![IMG-0658](https://user-images.githubusercontent.com/69003593/162529184-65d28188-9ff5-469d-8960-adce13a4ab8e.jpg)
+
+Microcontroller parts (Schmitt trigger assembly [left]; screw terminals for hooking up sensor wires; sD card module; LED light; DS3231 clock; charge controller):
+![IMG-0663](https://user-images.githubusercontent.com/69003593/162529421-9f5d9962-4a7c-44af-98b4-52ca30d1c06f.jpg)
+
+Receiver with ESP8266 and LoRa (note the matching red antenna [but to 9 cm for 915 megahertz frequency]  Note the much cleaner look with the receiver---because wires were soldered directly onto solderable breadboard as opposed to relying more on pre-made jumper wires attached to male pinheaders.
+![WeatherStationReceiver](https://user-images.githubusercontent.com/69003593/162530191-18ad3179-fc02-41ad-ab5c-bfbfa55fd26c.jpg)
 
 
 
- 
 
 
