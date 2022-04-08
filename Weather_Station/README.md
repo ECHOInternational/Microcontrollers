@@ -99,7 +99,15 @@ The receiver consists of an ESP8266 (NodeMcu 12-E) microcontroller connected to 
 * The LoRa frequency (the sketch specifies 915 megahertz, which is a license-free band in the United States; change this depending on what frequency does not require a radio transmitting license in your country)
 *  A key consisting of a four-digit number. The receiver only processes incoming packets of data that contain this key. Without this, I found that my receiver was processing data from other LoRa transceivers in the area, resulting in unwanted data.
 
+The sketch tells you where to insert the following information:
+* Your Write API key from Thingspeak
+* Your WiFI SSID and password
+* Your Thingspeak channel number
+
 Locate the receiver within range of a WiFi/internet signal. It needs to be powered on all the time in order to not miss readings. I power the ESP8266 through the USB port, connecting the other end of the USB cable to a 5-volt USB wall plug used for charging mobile phones. The USB port on the microcontroller is connected to a power regulator that converts the incoming voltage (5 volts) to the operating voltage of 3.3 volts. It is ideal to place the receiver within line of sight of the weather station (transmitter). 
+
+Incoming data are sent to a web platform called Thingspeak. You will need to go to Thingspeak.com and click on "Get Started" to open an account. You can configure Thingspeak to display data in graphs and/or gauges. An mobile phone app called Thingverse works with iOS (am not sure if it also works with Android); after inputting your Thingspeak channel number you can view graphs without having to be logged into Thingspeak. Adafruit IO is another web platform (see the Soil Logger and Wireless Monitor projects in this repository for coding related to Adafruit IO). 
+
 
 ### Wiring
 #### LoRa transceiver
