@@ -25,7 +25,7 @@ const char * myWriteAPIKey = "Your_Write_API_Key";
 const char *ssid =  "Your_WiFi_SSID";     // replace with your wifi ssid 
 const char *pass =  "Your_WiFi_Password"; // replace with your wifi password
 const char* server = "api.thingspeak.com";
-unsigned long myChannelNumber = 596676;
+unsigned long myChannelNumber = 596676;  //replace these numbers with your own Thingspeak channel number
 
 //define the pins used by the transceiver module; wiring needs to match (e.g., connect SS pin on the LoRa transceiver to pin D8 on the ESP8266 [NodeMcu])
 #define ss D8
