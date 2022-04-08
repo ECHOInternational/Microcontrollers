@@ -79,7 +79,7 @@ For software debounding, connect the wire on one side of the glass to ground,  a
 | Left side      | ---> |  GND            |   
 
 
-For hardware debouncing with a Schmitt trigger, connect one side of the reed swtich to a ground pin of the Arduino, as shown in the above table, or two the ground rail of the breadboard. The other end of the reed switch will be routed in between the two resistors of the Schmitt trigger set up shown in this video: https://www.youtube.com/watch?v=KHrTqdmYoAk&t=872s  (the latter third of the video discusses Schmitt triggers and contains a useful diagram of the circuit)
+For hardware debouncing with a Schmitt trigger, connect one side of the reed swtich to a ground pin of the Arduino, as shown in the above table, or two the ground rail of the breadboard. The other end of the reed switch will be routed between the two resistors of the Schmitt trigger set up shown in this video: https://www.youtube.com/watch?v=KHrTqdmYoAk&t=872s  (the latter third of the video discusses Schmitt triggers and contains a useful diagram of the circuit). The trigger signal wire, shown in the diagram in the video and coming off the Schmitt trigger, will connect to pin 2 of the arduino.
 
 #### Light Emitting Diode (LED) pin
 The transsmitter sketch makes use of a small LED light that blinks as the tipping buckets rock back and forth. This can be helpful in determining the effectiveness of your debouncing approach. You should see the light blink one time for each tip. The light also indicates that everything is functioning normally after pressing the reset button of the Arduino. If the LED light blinks continuously, something is wrong. If you get several long blinks prior to the LED light shutting off, that is an inidcation that the SD card module and other aspects of the setup code have initialized proplerly.
@@ -93,7 +93,25 @@ Connect the cathode leg of the LED to ground. Connect the anode leg of the LED t
 | Anode (+)      | ---> |pin 5 and 300 ohm resister |     
 | Cathode (-)    | ---> |  GND                      |      
  
+## Receiver
+The receiver consists of an ESP8266 (NodeMcu 12-E) microcontroller connected to a LoRa transceiver. The receiver sketch configures the LoRa transceiver to receive rather than transmit radio signals. There are two items in the receiver sketch that must match that of the transmitter sketch:
 
+* The LoRa frequency (the sketch specifies 915 megahertz, which is a license-free band in the United States; change this depending on what frequency does not require a radio transmitting license in your country)
+*  A key consisting of a four-digit number. The receiver only processes incoming packets of data that contain this key. Without this, I found that my receiver was processing data from other LoRa transceivers in the area, resulting in unwanted data.
+
+Locate the receiver within range of a WiFi/internet signal. It needs to be powered on all the time in order to not miss readings. I power the ESP8266 through the USB port, connecting the other end of the USB cable to a 5-volt USB wall plug used for charging mobile phones. The USB port on the microcontroller is connected to a power regulator that converts the incoming voltage (5 volts) to the operating voltage of 3.3 volts. It is ideal to place the receiver within line of sight of the weather station (transmitter). 
+
+### Wiring
+#### LoRa transceiver
+| LoRa           |       | Arduino Nano   |
+| :---:          | :---: | :---:          |
+| GND            |  ---> | GND            |
+| VCC/VIN        |  ---> | 3v3            |
+| GO/D1          |  ---> | D1             |
+| SCK            |  ---> | D5             |
+| MOSI           |  ---> | D7             |
+| MISO           |  ---> | D6             |
+| CS/NSS         |  ---> | D8             |
 
 
 
