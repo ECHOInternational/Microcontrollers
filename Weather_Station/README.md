@@ -51,11 +51,22 @@ This consists of an Arduino Nano with sensors (a rain and temperature/humidity s
 | :---:          | :---: | :---:          |
 | GND            |  ---> | GND            |
 | VCC/VIN        |  ---> | 3v3            |
-| GO/D1          |  ---> | 3              |
-| SCK            |  ---> | 18             |
-| MISO           |  ---> | 12             |
+| GO/D1          |  ---> | 9              |
+| SCK            |  ---> | 13             |
 | MOSI           |  ---> | 11             |
+| MISO           |  ---> | 12             |
 | CS/NSS         |  ---> | 10             |
+
+#### MicroSD card module
+| Card module    |       | Arduino Nano   |
+| :---:          | :---: | :---:          |
+| GND            |  ---> | GND            |
+| VCC/VIN        |  ---> | 3v3            |
+| CS/SS          |  ---> | 4              |
+| MOSI/DI        |  ---> | 11             |
+| MISO/DO        |  ---> | 12             |
+| CLK/SCK        |  ---> | 11             |
+
 
  
 
