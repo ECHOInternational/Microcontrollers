@@ -90,7 +90,7 @@ Connect the cathode leg of the LED to ground. Connect the anode leg of the LED t
 
 | LED pin        |      |  Arduino Nano             |
 | :---:          |:---: |  :---:                    |  
-| Anode (+)      | ---> |  5  (and 300 ohm resister |     
+| Anode (+)      | ---> |pin 5 and 300 ohm resister |     
 | Cathode (-)    | ---> |  GND                      |      
  
 
