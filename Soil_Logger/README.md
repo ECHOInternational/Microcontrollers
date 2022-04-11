@@ -139,6 +139,31 @@ Pin numbers defined in the sketch need to match the pins used in connecting the 
 | MOSI       |  ---> | D7          |
 | CS/NSS     |  ---> | D8          |
 
+## Weatherproofing the soil moisture sensor
+There is a waterproof version of a capacitive soil moisture: https://www.dfrobot.com/product-2054.html
+The electronics of most of the soil moisture sensors being sold, however, will need to be protected in some way. Exposed electronics at the top of the sensor are shown in the photo below:
+![SoilMoistureSensor](https://user-images.githubusercontent.com/69003593/162763179-ca2a520e-4cd4-4c60-ba04-f5078f8abecd.jpg)
+
+Some have used epoxy for weatherproofing. An approach I have succeeded with is to 1) pass wires through drip irrigation supply tubing (which serves as a conduit) and 2) place the sensor inside PVC. 
+
+An analog capacitive moisture sensor will have three wires to connect: ground (negative); power (positive); and analog out. So, cut three wires at a length that you will need to go from the ground, where the sensor will be burried, to your microcontroller enclosure. I suggest mounting the enclosure (box of some sort that contains your microcontroller, SD card module, etc.) on a fence post, at a distance above the ground that does not require more than 1 to 2 m of wire. Then pass your three wires through your conduit, as shown in the photos below:
+
+Solder your three wires, at one end, to the end of a wire thick and stiff and long enough to push all the way through the conduit. Take the other end of your push wire (thick/non-stranded piece) and push it through the conduit until that end emerges out the other end of the conduit. Now grasp the emerged end of the push wire and pull it through the conduit. In doing so, you will be able to pull your sensor wires through the conduit. Below is a photo showing the push wire soldered to two sensor wires (this build will require a third wire), and the sensor wires pulled through the conduit via the push wire.
+![DripSupplyTubing](https://user-images.githubusercontent.com/69003593/162767086-0098be0e-2c32-454d-a0a9-ddbd19f79837.jpg)
+
+Next, assemble the PVC enclosure. You will a few inches of pipe, just long enough to house the wires, and two end caps with the same inner diameter of the short piece of pipe. Cut one of the end caps with a blade close to the same thickness as that of the moisture sensor. I find that a wood saw or hack saw works well. Cut a slit in one of the PVC end caps that you can push the sensor through. You may need to sand the slit if the opening is too narrow to push the sensor through. The idea is to end up with a tight fit, so that the sensor is held firmly in place, reducing reliance on glue to do that. Below is a photo of an end cap being cut with a hack saw, in a vice, and what the end result should look like:
+![CutPVCCap](https://user-images.githubusercontent.com/69003593/162768978-8a934038-ef3d-4fcc-84be-b8d9041e9523.jpg)
+![CutPVCCapB](https://user-images.githubusercontent.com/69003593/162769011-1e6be23b-c880-4b29-892f-a3f84bfc0afa.jpg)
+
+Then, on the other of the two end caps, drill a hole through which you can push the conduit (with sensor wires inside) through. Aim for a tight fit; avoid ending up with a hole larger than the diameter of the conduit. With the hole drilled and conduit pushed through it, connect the wires to the sensor as shown below:
+![ConnectWires](https://user-images.githubusercontent.com/69003593/162769584-e033a8cf-4eb9-4f56-9db0-0bd990888670.jpg)
+
+The last step, then, is to push the soil moisture sensor through the slit in the end cap that you had cut for that purpose. Then push both end caps onto the PVC pipe and seal everything with silicone glue or putty. I suggest avoiding the use of PVC cement, since you may need to replace the sensor from time to time. Below is a photo showing all the wires inside the PVC, with just the sensor protruding out from one end.
+![WaterproofedSensor](https://user-images.githubusercontent.com/69003593/162770475-d96c9eda-3a68-48ce-8a0b-af42ed3bf690.jpg)
+
+
+
+
 
 
 
