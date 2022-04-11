@@ -28,7 +28,8 @@ The weather station itself is out of range of WiFi (internet). Thus the data are
 * Fabrication items: wires, solder, materials you may have on hand to build an enclosure for the Arduino Nano  
 
 ## Transmitter
-This consists of an Arduino Nano with sensors (a rain and temperature/humidity sensor) and other components (RTC clock, MicroSD card, and LoRa transceiver) connected to it. 
+This consists of an Arduino Nano with sensors (a rain and temperature/humidity sensor) and other components (RTC clock, MicroSD card, and LoRa transceiver) connected to it. The transmitter sketch, adapted from code by Qunintans (2015) (https://github.com/DesiQuintans/sneesl-rain-logger), collects sensor values at the beginning of every hour and then logs the values to an SD card and transmits them to the receiver. There is a section of code that allows for the monitoring of microcontroller voltage. Knowing the voltage could be helpful, for example, on consecutive cloudy days, to be aware if the microcontroller is not receiving enough power from the solar-charged batteries. I have not built the needed voltage divider ciruit (https://github.com/DesiQuintans/sneesl-rain-logger/blob/master/Build%20notes/Circuits/Old%20versions/Circuit%20-%20Diagram_bb.png) to make this work, but have left the code in place for future reference. Without the voltage divider circuit, the sketch enables voltage data to be logged to the SD card, but the data are not actual values. 
+
 ### Wiring
 #### Temperature/humidity sensor
 | SHT31 sensor   |      |  Arduino Nano   |
