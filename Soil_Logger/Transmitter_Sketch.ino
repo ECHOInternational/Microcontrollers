@@ -106,9 +106,9 @@ void setup() {
   // The data labels constitute column headings when opening the data.txt file in Excel.
   File file = SD.open("/data.txt");
   if(!file) {
-    Serial.println("File doens't exist");
+    Serial.println("File doesn't exist");
     Serial.println("Creating file...");
-    writeFile(SD, "/data.txt", "Reading ID, DayOfMonth, Month, Year, Hour, Minute, Temperature, Moisture_mV MoisturePct \r\n");
+    writeFile(SD, "/data.txt", "Reading ID, Date, Time, Temperature, Moisture_mV, MoisturePct \r\n");
   }
   else {
     Serial.println("File already exists");  
@@ -262,8 +262,8 @@ void logData() {
                                                // "float SoilTemp = sensors.getTempFByIndex(0);"
   
   // Assemble content (the reading number, time/date, and readings) to save on SD card
-  dataMessage = String(readingID) + "," + String(monthDay) + "/" + String(month) + "/" + String(year) + "T" + 
-                String(hour) + ":" + String(minute) + ":" + String(SoilTemp) + "," + String(moistureValue) + 
+  dataMessage = String(readingID) + "," + String(monthDay) + "/" + String(month) + "/" + String(year) + "," + 
+                String(hour) + ":" + String(minute) + "," + String(SoilTemp) + "," + String(moistureValue) + "," +
                 String(moisturePercent)+ "\r\n"; 
 
   // Save (append) data to the data.text file previously written to the SD card.
