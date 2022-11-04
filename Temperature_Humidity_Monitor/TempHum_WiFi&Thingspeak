@@ -1,0 +1,199 @@
+/*
+Main function of this code: 
+  Read temperature and humidity from an SHT31 sensor, display the values for a few seconds on an OLED screen, post the data on an online platform called Thingspeak, 
+  go into sleep mode for longer battery life, and wake up after about an hour to take another set of readings. Data are, thus, displayed and published online at close
+  to one-hour intervals. If the reset button is pressed, the process starts afresh. Putting the microcontroller into deep sleep 
+  in between readings reduces power consumption for longer battery life (at least 2 weeks on 4 AA batteries connected in series.
+
+Requirements:
+  Wireless functionality requires Thingspeak platform credentials. To set up a free Thingspeak channel, follow instructions given here: 
+  https://thingspeak.com/ and click on the "Get Started for Free" tab. This will give you a "Write API Key" needed in the code. 
+  For screenshots of how to set up ThingSpeak see the "Getting Thingspeak API Ready" section of the website found here:
+    https://microcontrollerslab.com/esp8266-nodemcu-send-sensor-readings-thingspeak-arduino/
+
+  You will also need the service set identifier (SSID), also known as a  network name, and password for your Internet Service Provider.
+
+Code sources:
+  For the Wemos D1 Mini OLED shield: http://www.esp8266learning.com/wemos-oled-shield-example.php
+  For the SHT31 sensor and WiFi/Thingspeak functions: https://how2electronics.com/esp8266-sht31-humidity-temperature-monitoring-thingspeak/
+  For deep sleep/low-power functionality: https://www.mischianti.org/2019/11/21/wemos-d1-mini-esp8266-the-three-type-of-sleep-mode-to-manage-energy-savings-part-4/
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+LIBRARIES:
+  No need to install Arduino, SPI and Wire libraries as these are already included in the Arduino platform 
+  The ESP8266WiFi library will be installed when the Wemos D1 Mini is added as an ESP8266-based board to the Board Manager of the Arduino IDE platform, as instructed here:
+    https://www.teachmemicro.com/getting-started-wemos-d1-mini/
+  
+  Instructions for installing the SSD1306 and GFX.h libraries are here: https://siytek.com/wemos-d1-mini-oled-64x48-shield/#How-To-Install-The-Wemos-OLED-Shield-Library
+  Additional instructions for installing the SSD1306 library are found here: https://www.arduino.cc/reference/en/libraries/adafruit-ssd1306-wemos-mini-oled/
+  The SSD1306 library referred to in the above websites has functionality for the Wemos D1 Mini Oled shield, which other OLED libraries may not have.
+  The Adafruit_SHT31.h library can be installed using the Library Manager in the Arduino IDE software, or it can be imported from github at:
+     https://github.com/adafruit/Adafruit_SHT31 
+*/
+
+#include <ESP8266WiFi.h>
+#include <Arduino.h>
+#include <SPI.h>
+#include <Wire.h>
+#include "Adafruit_SHT31.h"
+#include <Adafruit_GFX.h>
+#include <Adafruit_SSD1306.h>
+
+//DEFINITIONS AND PARAMETERS
+//Thingspeak and WiFi credentials
+String apiKey = "XXXXX";    // Enter your Write API key from ThingSpeak
+const char *ssid = "XXXXX";          // Replace with your WiFi ssid 
+const char *pass = "XXXXX";  //Replace with your WiFi password
+const char* server = "api.thingspeak.com";  
+
+WiFiClient client;
+ 
+Adafruit_SHT31 sht31 = Adafruit_SHT31();
+
+// OLED display definitions
+#define OLED_RESET 0
+Adafruit_SSD1306 display(OLED_RESET);
+#define NUMFLAKES 10
+#define XPOS 0
+#define YPOS 1
+#define DELTAY 2
+
+#define LOGO16_GLCD_HEIGHT 16
+#define LOGO16_GLCD_WIDTH  16
+
+//SETUP 
+void setup() 
+{
+  Serial.println("SHT31 test");
+  if (! sht31.begin(0x44))        // Set to 0x45 for alternate i2c addr
+  { 
+  Serial.println("Couldn't find SHT31");
+  while (1) delay(1);
+  }
+
+  // Get temperature and humidity readings from the SHT31 sensor
+  float temp = sht31.readTemperature();
+  float hum = sht31.readHumidity();
+
+  //Initialize the OLED display
+  display.begin(SSD1306_SWITCHCAPVCC, 0x3C); //use something other than 0x3C if address differs
+  display.clearDisplay(); //clear the buffer
+  display.setTextColor(WHITE);
+  display.display();
+
+  //Display the temperature
+  display.setTextSize(2); //The number "2" specifies text size
+  display.setCursor(2,5); //First number sets horizontal placement; second number sets vertical placement
+  display.print(temp,0); //displays temp in degrees C; if you had wanted temp in degrees F
+                          //change this line of code to:
+                          //displlay.print(tempF,0);
+                          //see the "Get temp and humidity from the sensor" section for the line
+                          //of code in that section needed for "tempF" here to work
+                          //The "0" in the command specifies no decimal points.
+  display.print(" ");
+  display.setTextSize(1);
+  display.cp437(true);
+  display.write(167);
+  display.print("C"); //Replace "C" with "F" if you want to display Fahrenheit 
+  
+  // Display the relative humidity
+  display.setTextSize(2);
+  display.setCursor(2, 35);
+  display.print(hum,0);
+  display.setTextSize(1);
+  display.print(" %RH"); 
+  
+  display.display();
+  delay(4000); //display for 4 seconds; if, for example, you want to be able to see the 
+               //data on the screen for 3 seconds, replace "2000" with "3000"
+  display.clearDisplay(); // clear display
+  display.ssd1306_command(SSD1306_DISPLAYOFF); //so the OLED does not stay on, which would 
+                                               //consume too much battery power
+  //Initialize serial communication so you can troubleshoot the code by viewing messages
+  //printed on the serial monitor in the Arduino IDE software (with the board connected 
+  //by USB to your computer.
+  Serial.begin(115200);
+ 
+  while (!Serial)
+  delay(10);             // will pause Zero, Leonardo, etc until serial console opens
+ 
+  Serial.println("Connecting to ");
+  Serial.println(ssid);
+  WiFi.begin(ssid, pass);
+  while (WiFi.status() != WL_CONNECTED)
+  {
+    delay(500);
+    Serial.print(".");
+  }
+    Serial.println("");
+    Serial.println("WiFi connected");
+
+  //Send readings to the OLED and to Thingspeak
+  SendReadings();
+  delay(250);  //Wait for 250 milliseconds to make sure everything is done
+  
+  Serial.println();
+  // Deep sleep mode for 30 seconds, the ESP8266 wakes up by itself when GPIO 16 (D0 in NodeMCU board) is connected to the RESET pin
+  Serial.println("I'm awake, but I'm going into deep sleep mode for 30 seconds");
+
+  //Go to sleep for about an hour
+  ESP.deepSleep(3600e6);  //10e6 is 10 seconds so with 3600 seconds in an hour (60 min X 60 sec/min),
+                          //the number in parentheses is "3600e6"
+
+}
+ 
+//LOOP--the Wemos board automatically wakes up after the prescribed period of deep sleep, so the loop is never reached. 
+      //Whle the loop contains no commands, the function must appear in order for the program to compile.
+void loop()  
+{ }  
+
+//FUNCTION CALLED FOR IN SETUP---TO DISPLAY SENSOR DATA ON THE OLED SCREEN AND PUBLISH ONLINE
+void SendReadings()
+{
+  float temp = sht31.readTemperature();
+  float hum = sht31.readHumidity();
+ 
+ 
+if (client.connect(server,80))   //   "184.106.153.149" or api.thingspeak.com
+      {  
+       String sendData = apiKey+"&field1="+String(temp)+"&field2="+String(hum)+"\r\n\r\n"; 
+       
+       //Serial.println(sendData);
+ 
+       client.print("POST /update HTTP/1.1\n");
+       client.print("Host: api.thingspeak.com\n");
+       client.print("Connection: close\n");
+       client.print("X-THINGSPEAKAPIKEY: "+apiKey+"\n");
+       client.print("Content-Type: application/x-www-form-urlencoded\n");
+       client.print("Content-Length: ");
+       client.print(sendData.length());
+       client.print("\n\n");
+       client.print(sendData);
+      }
+ 
+  if (! isnan(temp))      // check if the temperature reading is not a number
+  {
+  Serial.print("Temp *C = "); 
+  Serial.println(temp);
+   
+  } 
+  else 
+  {
+  Serial.println("Failed to read temperature");
+  }
+   
+  if (! isnan(hum))      // check if the humidity reading is not a number
+  { 
+  Serial.print("Hum. % = "); 
+  Serial.println(hum);
+   
+  } 
+  else 
+  {
+  Serial.println("Failed to read humidity");
+  }
+
+
+ 
+}
