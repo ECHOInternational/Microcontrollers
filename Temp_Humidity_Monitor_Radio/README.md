@@ -1,7 +1,7 @@
-# Wireless, Radio-Based Air Temperature and Humidity Monitor
+# Wireless, Radio-Based Air Temperature and Humidity Monitor: with Arduino Nano 
 
 ## What these sketches do
-This project was developed to monitor conditions in a seed storage room that was out of range of WiFi (internet) but close to the main seed banking area that has WiFi. LoRa RFM95 transceivers are therefore used to be able to send data from an Arduino Nano in the seed storage room to an ESP8266/NodeMcu in the main building. Each microcontroller is paired with a LoRa transceiver. If you are monitoring conditions in a building where there is WiFi, you would only need a WiFi-capable microcontroller (e.g., NodeMCE or ESP32). 
+This project was developed to monitor conditions in a seed storage room that was out of range of WiFi (internet) but close to the main seed banking area that has WiFi. LoRa RFM95 transceivers are therefore used to be able to send data from an Arduino Nano in the seed storage room to an ESP8266/NodeMcu in the main building. Each microcontroller is paired with a LoRa transceiver. If you are monitoring conditions in a building where there is WiFi, you would only need a WiFi-capable microcontroller (e.g., NodeMCU or ESP32). 
 
 The Arduino Nano, placed in the seed storage room, collects hourly temperature and humidity readings via an SHT31 sensor. The main purpose of the monitoring project is to publish data online to be able to receive an email alert if, for example, temperature increases above a threshold that would indicate the cooling system is not working. Since we were not interested in tracking long-term trends, data are not logged to a microSD card.
 
