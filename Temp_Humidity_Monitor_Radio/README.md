@@ -11,6 +11,7 @@ Incoming data is processed by the receiver to 1) display the data on an OLED scr
 
 ## Hardware list
 * An Arduino Nano
+* A Sensirion SHT31 sensor
 * An ESP8266/NodeMCU-12E
 * Two LoRa transceiver radios (this programming works with RFM95 radios; select a version capable of transmitting at a licence-free frequency for your country
 * An OLED display (128 X 64 pixels)
