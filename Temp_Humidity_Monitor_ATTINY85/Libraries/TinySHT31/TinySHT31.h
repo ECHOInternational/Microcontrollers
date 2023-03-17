@@ -1,3 +1,7 @@
+//This is a modification of the Grove_SHT31_Temp_Humi_Sensor from Seeed Studio, as explained by Wolfgang Ewald (2022) 
+//in TinyWireM vs Wire for ATtinys: https://wolles-elektronikkiste.de/en/tinywirem-vs-wire-for-attinys
+
+
 #ifndef _SHT31_H_
 #define _SHT31_H_
 
