@@ -72,7 +72,7 @@ in TinyWireM vs Wire for ATtinys found here: https://wolles-elektronikkiste.de/e
 The receiver makes use of a LoRa RFM95 transceiver to receive temperature and humidity data from the transmitter. The LoRa module is wired to a Wemos D1 Mini microcontroller, which then posts the data to an online platform called Thingspeak. You will need to set up a free Thingspeak channel, following instructions given here: https://thingspeak.com/. Once there, click on the "Get Started for Free" tab. This will give you a "Write API Key" needed in the code. For screenshots of how to set up ThingSpeak see the "Getting Thingspeak API Ready" section of the website found here:     https://microcontrollerslab.com/esp8266-nodemcu-send-sensor-readings-thingspeak-arduino/ 
 
 ### Wiring 
-The LoRa RFM95 radio/transceiver is designed for a 3.3 volt power supply. Be sure to connect the power (VCC) of the radio to the 3.3 volt pin of the Wemos; do NOT connect it to the 5 volt pin on the WeMos, as this will likely damage the radio. 
+The LoRa RFM95 radio/transceiver is designed for a 3.3 volt power supply. Be sure to connect the power (VCC) of the radio to the 3.3 volt pin of the Wemos; do NOT connect it to the 5 volt pin on the WeMos, as this will likely damage the radio. The simplest option for an antenna is a piece of sheathed copper wire, cut to the appropriate length for the license-free frequency band in your country. A length of 7.8 cm (3 in) is the correct length for a frequecy of 915 Mhz. For lenths for other frequencies, see the web page found here: https://learn.adafruit.com/adafruit-rfm69hcw-and-rfm96-rfm95-rfm98-lora-packet-padio-breakouts/assembly
 
 | LoRa           |       | WeMos D1 Mini  |
 | :---:          | :---: | :---:          |
