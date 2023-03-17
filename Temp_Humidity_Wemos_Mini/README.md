@@ -2,7 +2,7 @@
 # Air Temperature and Humidity Monitor (Wemos-Based)
 
 ## What these sketches do
-Each of two sketches utilizes a Wem0s D1 Mini microcontroller to read a SHT31 Sensirion sensor. Both are able to show the readings on an OLED display shield inserted into female pins soldered to the top of the Wemos. 
+Each of two sketches utilizes a Wemos D1 Mini microcontroller to read a SHT31 Sensirion sensor. Both are able to show the readings on an OLED display shield inserted into female pins soldered to the top of the Wemos. 
 
 The first and most basic sketch reads the temperature and humidity and displays the values on the OLED screen, with a new reading displayed every few seconds. This sketch will work where there is no WiFi. Limitations are that readinggs can only be viewed on the OLED screen (e.g., no data logging possible), and there is no power-saving functionality. Thus, to conserve battery life, turn the switch on the battery pack off when you have taken a reading.
 
