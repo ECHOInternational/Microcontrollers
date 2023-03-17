@@ -1,0 +1,159 @@
+/*
+Receiver sketch assembled by Tim Motis for receiving sensor values from the field (transmitter) and publishing
+data to a web platform, Thingspeak, for online viewing.
+
+LoRa code modified from the examples of the Arduino LoRa library
+More resources: https://randomnerdtutorials.com
+
+Thingspeak portion adapted from code by:
+  The Mathworks, Inc.: https://github.com/mathworks/thingspeak-arduino/blob/master/examples/ESP8266/program%20board%20directly/WriteMultipleFields/WriteMultipleFields.ino
+  benjineer.io: https://www.instructables.com/Tutorial-2-Remote-Relay-Node/
+
+  To set up a Thingspeak account, visit https://thingspeak.com/ and click on the "Get Started for Free" tab. This will give you a "Write API Key" needed in the sketch.
+*/
+
+// LIBRARIES
+#include <ESP8266WiFi.h>
+#include <LoRa.h>
+#include <Adafruit_Sensor.h>
+#include <ThingSpeak.h>
+
+// DEFINITIONS OF VARIABLES AND PINS
+String apiKey = "XXXXXXXX";     //  Here and in the line below enter, between the quotation marks, your Write API key from ThingSpeak
+const char * myWriteAPIKey = "XXXXXXXX";  
+
+const char *ssid =  "XXXXXXX";     // replace with your wifi ssid 
+const char *pass =  "XXXXXXXX"; // replace with your wifi password
+const char* server = "api.thingspeak.com";
+unsigned long myChannelNumber =  XXXXXXX;  // replace with your Thingspeak channel ID number
+
+//define the pins used by the transceiver module; wiring needs to match (e.g., connect SS pin on the LoRa transceiver to pin D8 on the ESP8266 [NodeMcu])
+#define ss D8
+#define dio0 D1
+
+String myStatus = ""; //not sure if this is actually needed; feel free to experiment with and without this
+
+int LoRaData;
+ 
+WiFiClient client;
+
+// #### SETUP ####################################################
+
+void setup() {
+  //initialize Serial Monitor
+  Serial.begin(9600);
+  while (!Serial);
+  Serial.println("LoRa Receiver");
+
+  //setup LoRa transceiver module
+  LoRa.setPins(ss, dio0);
+  
+  //replace the LoRa.begin(---E-) argument with your location's frequency 
+  //433E6 for Asia
+  //866E6 for Europe
+  //915E6 for North America
+  while (!LoRa.begin(915E6)) {
+    Serial.println(".");
+    delay(500);
+  }
+   // Change sync word (0xF3) to match the receiver
+  // The sync word assures you don't get LoRa messages from other LoRa transceivers
+  // ranges from 0-0xFF
+  LoRa.setSyncWord(0xF3);
+  Serial.println("LoRa Initializing OK!");
+
+  // Initialize WiFi and Thingspeak
+  WiFi.begin(ssid, pass);
+   
+  while (WiFi.status() != WL_CONNECTED) 
+  {
+        delay(500);
+        Serial.print(".");
+  }
+  Serial.println("");
+  Serial.println("WiFi connected");
+  ThingSpeak.begin(client);
+}
+
+
+void loop() {
+  // try to parse incoming data packet received from the transmitter
+  int packetSize = LoRa.parsePacket();
+  if (packetSize) {
+    // received a packet
+    Serial.print("Received packet '");
+
+    // read packet
+    while (LoRa.available()) {
+      String LoRaData = LoRa.readString();
+      Serial.print(LoRaData); 
+ 
+      // print RSSI of packet
+      Serial.print("' with RSSI ");
+      Serial.println(LoRa.packetRssi());
+                
+      // Connect or reconnect to WiFi
+      if(WiFi.status() != WL_CONNECTED){
+        Serial.print("Attempting to connect to SSID: ");
+        Serial.println("Your_WiFi_SSID"); // replace with your wifi ssid 
+        while(WiFi.status() != WL_CONNECTED){
+          WiFi.begin(ssid, pass); // Connect to WPA/WPA2 network. Change this line if using open or WEP network
+          Serial.print(".");
+          delay(5000);     
+        } 
+        Serial.println("\nConnected.");
+      }
+
+      // set the fields with the values
+
+      Serial.println("LoRaData String:");
+      Serial.println(LoRaData);
+      const int key = 9874;  //these numbers should match that of the key specified in the transmitter sketch
+      
+      String strKey = getValue(LoRaData, ':', 0);
+      String strTemp = getValue(LoRaData, ':', 1);
+      String strHum = getValue(LoRaData, ':', 2);
+      
+               
+      int intKey = strKey.toInt();
+      int intTemp = strTemp.toInt();
+      int intHum = strHum.toInt();
+      if (intKey == key) { 
+      ThingSpeak.setField(1, strTemp);
+      ThingSpeak.setField(2, strHum);
+      
+     
+
+      //write to the ThingSpeak channel
+      int x = ThingSpeak.writeFields(myChannelNumber, myWriteAPIKey);
+      if(x == 200){
+        Serial.println("Channel update successful.");
+      }
+      else{
+        Serial.println("Problem updating channel. HTTP error code " + String(x));
+      }
+     
+      // thingspeak needs minimum 15 sec delay between updates, i've set it to 30 seconds
+      delay(30000);
+      }
+      else {};
+    }
+  }
+}
+
+// Break string values into separate fields to post on Thingspeak;
+String getValue(String data, char separator, int index)
+{
+    int found = 0;
+    int strIndex[] = { 0, -1 };
+    int maxIndex = data.length() - 1;
+
+    for (int i = 0; i <= maxIndex && found <= index; i++) {
+        if (data.charAt(i) == separator || i == maxIndex) {
+            found++;
+            strIndex[0] = strIndex[1] + 1;
+            strIndex[1] = (i == maxIndex) ? i+1 : i;
+        }
+    }
+    return found > index ? data.substring(strIndex[0], strIndex[1]) : "";
+}
