@@ -30,9 +30,8 @@ Another LoRa transceiver is used to receive the radio signal from the transmitti
 * Optional parts for soldering on a circuit board include protaboard, pin headers, and an 8-pin DIP socket (so that you can pull out/replace the ATTINY85 sensor as needed)
 
 ## Transmitter device
-As mentioned earlier, the transmitter device consists of an ATTINY85, a LoRa transceiver, and an SHT31D temperature/humidity sensor. Note that the LoRa transceiver is not "breadboard friendly"; the hole spacing does not match that of standard printed circuit boards used in Arduino projects. I used an approach shown here: https://linux.livorno.it/2976/modulo-rfm95w-lora/. Another option is here: https://www.tindie.com/products/lps/rfm95-breakout-board/?pt=ac_prod_search
+As mentioned earlier, the transmitter device consists of an ATTINY85, a LoRa transceiver, and an SHT31D temperature/humidity sensor. Note that the LoRa transceiver is not "breadboard friendly"; the hole spacing does not match that of standard printed circuit boards used in Arduino projects. I used an approach shown here: https://linux.livorno.it/2976/modulo-rfm95w-lora/. A cleaner option, with less soldering, is here: https://www.tindie.com/products/lps/rfm95-breakout-board/?pt=ac_prod_search.
 
-https://randomnerdtutorials.com/esp32-lora-rfm95-transceiver-arduino-ide/
 
 ### Wiring
 
@@ -48,7 +47,7 @@ https://randomnerdtutorials.com/esp32-lora-rfm95-transceiver-arduino-ide/
 | CS/NSS         |  ---> | PB4 (Pin 3)    |
 
 
-Temperature/humidity sensor
+#### Temperature/humidity sensor
 |SHT31 sensor|   	  |ATTINY85    |
 |:-----------|:----:|:---------: |
 |GND	       |--->	|GND (Pin 4) |
@@ -56,7 +55,44 @@ Temperature/humidity sensor
 |SCL	       |--->	|SCL (Pin 7) |
 |SDA	       |--->	|SDA (Pin 5) |
 
-Battery holder: if using two AA batteries, they can be housed in a battery holder that holds two batteries, or in two single AA battery holders. Either way, on one end of the device, connect the positive end of one battery to the negative end of the other battery. This will mean that your batteries are connected in series (as opposed to parallel). When connected in series, the voltage of each battery is summed. Since the voltage of a new/fully charged AA battery is about 1.3 (for recharegable batteries; even though they are labeled as having 1.2 v) or 1.6 (for non-rechargeable batteries; even though they are labeled as having 1.5 v) volts, the power supplied to the ATTINY85 will be 2.6 volts (1.3 + 1.3) with new/fully charged rechareable batteries or 3.2 v (1.6 + 1.6) with non-recharceable batteries. On the other end of the battery holder (opposite from the end where you connected the positive end of one battery to the negative end of the other battery), connect the positive terminal of the battery holder to the power pin (VCC; Pin 8) of the ATTINY85 and the negetavie terminal of the battery holder to the ground pin (GND; Pin 4) of the ATTINY85. 
+#### Battery holder
+If using two AA batteries, they can be housed in a battery holder that holds two batteries, or in two single AA battery holders. Either way, on one end of the device, connect the positive end of one battery to the negative end of the other battery. This will mean that your batteries are connected in series (as opposed to parallel). When connected in series, the voltage of each battery is summed. Since the voltage of a new/fully charged AA battery is about 1.3 (for recharegable batteries; even though they are labeled as having 1.2 v) or 1.6 (for non-rechargeable batteries; even though they are labeled as having 1.5 v) volts, the power supplied to the ATTINY85 will be 2.6 volts (1.3 + 1.3) with new/fully charged rechareable batteries or 3.2 v (1.6 + 1.6) with non-recharceable batteries. On the other end of the battery holder (opposite from the end where you connected the positive end of one battery to the negative end of the other battery), connect the positive terminal of the battery holder to the power pin (VCC; Pin 8) of the ATTINY85 and the negetavie terminal of the battery holder to the ground pin (GND; Pin 4) of the ATTINY85. 
 
 The ATTINY85 can be supplied with a voltage range of 1.8 to 5.5 volts, giving flexibility in terms of battery options. Instead of AA batteries, you could power it with a single 18650 battery, which would supply 3.7 v. The AAs are more widely available than 18650s. 
+
+### Programming
+You will need a way to program the ATTINY85. I use an Arduino Nano, but you can also use an Arduino Uno or a USB option by Digispark. There are many YouTube videos on how to do this. When using an Arduino to connect the ATTINY to your computer and program it, you may get a "programmer required" error when you try to upload the sketch. This happens with newer versions (e.g. 2.03) of Arduino IDE software. If this happens, navigate to the "Sketch" tab of your Arduino IDE screen and click on the option that says "Upload using programmer."
+
+The LoRa functionality is based on the sandeepmistry library found here: https://github.com/sandeepmistry/arduino-LoRa. It requires some modification to work with the ATTINY85, as explained by T Zondove (2022) here: https://www.youtube.com/watch?v=amkT5NtOgWc. Add the sandeepmistry library to your Arduino library folder, rename it as "TinyLoRa," navigate to the "src" folder, and replace the ".h" and ".cpp" files with the two that are in the Temp_Humidity_Monitor_ATTINY85/Libraries/TinyLoRa folder in this github repository. Those files reflecct all of the modifications presented by T Zondove. Make sure the files are named "TinyLoRa.cpp" and "TinyLoRa.h"; otherwise, Arduino IDE will not be able to find the TinyLoRa library.
+
+Functionality related to the SHT31D temperature sensor is based on the library called Grove_SHT31_Temp_Humi_Sensor by Seeed-Studio, found here: https://github.com/Seeed-Studio/Grove_SHT31_Temp_Humi_Sensor. It requires modification of the ".h" and ".cpp" files, as explained by Wolfgang Ewald (2022) 
+in TinyWireM vs Wire for ATtinys found here: https://wolles-elektronikkiste.de/en/tinywirem-vs-wire-for-attinys. Add the Grove SHT31 library to your Arduino library folder, open the resulting Grove SHT31 library folder, and replace the ".cpp" and ".h" files with the two that are in the Temp_Humidity_Monitor_ATTINY85/Libraries/TinySHT31 folder in this github repository. Those files reflecct all of the modifications presented by W. Ewald.
+
+## Receiver Device
+The receiver makes use of a LoRa RFM95 transceiver to receive temperature and humidity data from the transmitter. The LoRa module is wired to a Wemos D1 Mini microcontroller, which then posts the data to an online platform called Thingspeak. You will need to set up a free Thingspeak channel, following instructions given here: https://thingspeak.com/. Once there, click on the "Get Started for Free" tab. This will give you a "Write API Key" needed in the code. For screenshots of how to set up ThingSpeak see the "Getting Thingspeak API Ready" section of the website found here:     https://microcontrollerslab.com/esp8266-nodemcu-send-sensor-readings-thingspeak-arduino/ 
+
+### Wiring 
+The LoRa RFM95 radio/transceiver is designed for a 3.3 volt power supply. Be sure to connect the power (VCC) of the radio to the 3.3 volt pin of the Wemos; do NOT connect it to the 5 volt pin on the WeMos, as this will likely damage the radio. 
+
+| LoRa           |       | WeMos D1 Mini  |
+| :---:          | :---: | :---:          |
+| GND            |  ---> | GND            |
+| VCC/VIN        |  ---> | 3v3            |
+| GO/Dio0        |  ---> | D1             |
+| SCK            |  ---> | D5             |
+| MISO           |  ---> | D6             |
+| MOSI           |  ---> | D7             |
+| CS/NSS         |  ---> | D8             |
+
+### Programming
+You will need to set up a free Thingspeak channel, following instructions given here: https://thingspeak.com/. Once there, click on the "Get Started for Free" tab. This will give you a "Write API Key" needed in the code. For screenshots of how to set up ThingSpeak see the "Getting Thingspeak API Ready" section of the website found here:     https://microcontrollerslab.com/esp8266-nodemcu-send-sensor-readings-thingspeak-arduino/.
+
+You will also need your WiFi credentials in order for the WeMos to connect to WiFi. Before uploading the Receiver sketch to the WeMos, look at the comments towards the top of the sketch to find where you need to input your WiFi credentials. 
+
+Note in the LoRa parts of each sketch that both the Transmitter and Receiver sketch ask for a 4-digit key. That key needs to be exactly the same. Its purpose is to only post online the data that come from your transmitter, avoiding unwanted data from stray radio signals.
+
+
+
+
+
 
