@@ -36,6 +36,7 @@ As mentioned earlier, the transmitter device consists of an ATTINY85, a LoRa tra
 ### Wiring
 
 #### LoRa Transciever
+The simplest option for an antenna is a piece of sheathed copper wire, cut to the appropriate length for the license-free frequency band in your country. A length of 7.8 cm (3 in) is the correct length for a frequecy of 915 Mhz. For lenths for other frequencies, see the web page found here: https://learn.adafruit.com/adafruit-rfm69hcw-and-rfm96-rfm95-rfm98-lora-packet-padio-breakouts/assembly
 
 | LoRa RFM95     |       | ATTINY85   |
 | :---:          | :---: | :---:          |
@@ -68,11 +69,13 @@ The LoRa functionality is based on the sandeepmistry library found here: https:/
 Functionality related to the SHT31D temperature sensor is based on the library called Grove_SHT31_Temp_Humi_Sensor by Seeed-Studio, found here: https://github.com/Seeed-Studio/Grove_SHT31_Temp_Humi_Sensor. It requires modification of the ".h" and ".cpp" files, as explained by Wolfgang Ewald (2022) 
 in TinyWireM vs Wire for ATtinys found here: https://wolles-elektronikkiste.de/en/tinywirem-vs-wire-for-attinys. Add the Grove SHT31 library to your Arduino library folder, open the resulting Grove SHT31 library folder, and replace the ".cpp" and ".h" files with the two that are in the Temp_Humidity_Monitor_ATTINY85/Libraries/TinySHT31 folder in this github repository. Those files reflecct all of the modifications presented by W. Ewald.
 
+Pay attention to the LoRa frequency in the transmitter sketch. Use a licence-free frequency band for your country. 
+
 ## Receiver Device
 The receiver makes use of a LoRa RFM95 transceiver to receive temperature and humidity data from the transmitter. The LoRa module is wired to a Wemos D1 Mini microcontroller, which then posts the data to an online platform called Thingspeak. You will need to set up a free Thingspeak channel, following instructions given here: https://thingspeak.com/. Once there, click on the "Get Started for Free" tab. This will give you a "Write API Key" needed in the code. For screenshots of how to set up ThingSpeak see the "Getting Thingspeak API Ready" section of the website found here:     https://microcontrollerslab.com/esp8266-nodemcu-send-sensor-readings-thingspeak-arduino/ 
 
 ### Wiring 
-The LoRa RFM95 radio/transceiver is designed for a 3.3 volt power supply. Be sure to connect the power (VCC) of the radio to the 3.3 volt pin of the Wemos; do NOT connect it to the 5 volt pin on the WeMos, as this will likely damage the radio. The simplest option for an antenna is a piece of sheathed copper wire, cut to the appropriate length for the license-free frequency band in your country. A length of 7.8 cm (3 in) is the correct length for a frequecy of 915 Mhz. For lenths for other frequencies, see the web page found here: https://learn.adafruit.com/adafruit-rfm69hcw-and-rfm96-rfm95-rfm98-lora-packet-padio-breakouts/assembly
+The LoRa RFM95 radio/transceiver is designed for a 3.3 volt power supply. Be sure to connect the power (VCC) of the radio to the 3.3 volt pin of the Wemos; do NOT connect it to the 5 volt pin on the WeMos, as this will likely damage the radio. Solder an antenna as explained for the transmitting device. The transmitter and receiver both need to operate at the same frequency.
 
 | LoRa           |       | WeMos D1 Mini  |
 | :---:          | :---: | :---:          |
@@ -90,6 +93,8 @@ You will need to set up a free Thingspeak channel, following instructions given 
 You will also need your WiFi credentials in order for the WeMos to connect to WiFi. Before uploading the Receiver sketch to the WeMos, look at the comments towards the top of the sketch to find where you need to input your WiFi credentials. 
 
 Note in the LoRa parts of each sketch that both the Transmitter and Receiver sketch ask for a 4-digit key. That key needs to be exactly the same. Its purpose is to only post online the data that come from your transmitter, avoiding unwanted data from stray radio signals.
+
+Pay attention to the LoRa frequency in the receiver sketch. It needs to match the frequency selected in the transmitter sketch.
 
 
 
