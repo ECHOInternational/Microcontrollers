@@ -25,17 +25,17 @@
 
 ## Library
 * DHT22 Temp/Hum sensor
-```sh
+```c++
 #include <DHT.h> 
 DHT dht(TEMPHUM, DHT22);
 ```
 * LiquidCrystal_I2C
-```sh
+```c++
 #include <LiquidCrystal_I2C.h> 
 LiquidCrystal_I2C lcd(0x27, 16, 2);
 ```
 * MQ135 Gas Sensor for CO2
-```sh
+```c++
 #include <MQ135.h>
 MQ135 mq135(CO2);
 ```
