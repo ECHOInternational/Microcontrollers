@@ -77,3 +77,5 @@ MQ135 mq135(CO2);
 |B-2A| --> |D11|
 |A-1A| --> |D6|
 |A-2A| --> |D7|
+
+<img src="https://github.com/achoi2025/Microcontrollers/blob/1dc1f8b9e78ce76bc70550bfee27a0d4197fbe63/Smart%20Hydroponics%20Kit/img/4.jpg" width="300">
