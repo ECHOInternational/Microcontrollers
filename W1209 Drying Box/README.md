@@ -1,11 +1,15 @@
-#Introduction
+# Introduction
 This is an inexpensive approach to temperature-controlled drying, with air circulation, in an enclosed space. The drying box pictured below was initially developed to dry moringa leaves for making moringa leaf powder. It works well for that purpose, enabling the drying of leaves at a desired temperature (e.g., between 35 and 50 degrees C) that allows the material to dry fast enough to avoid mold while also minimizing vitamin loss due to high drying temperature. The box is also a good option for drying seeds. It is appropriate for small quantities of leaves or seeds and is a good option for drying under ambient conditions that might be too humid for air drying. The desired drying temperature can be set with push buttons on the temperature controller, so there is no need to upload programming code via a computer.
 
-#How it works
+#H ow it works
 Heat is generated with mini heat pads. Air circulation is provided with axial-style DC computer fans. When connected to power (via a DC adaptor) the fans and heat pads turn on. When the temperature reaches the desired/preset temperature, the heat pads shut off while the fans continue to run. When the temperature drops below the desired temperature, the fans turn on again. Thus, during drying the fans stay on constantly while the heat pads are switched on and off automatically to keep the temperature to within a few degrees of the desired temperature. 
 
 ![DryingBoxW1209](https://github.com/ECHOInternational/Microcontrollers/assets/69003593/898c4e29-8af6-4c41-9e38-8ff6ab2949eb)
 
-#Materials
+# Materials
 1. An insulated box, such as the Styrofoam cooler pictured above.
 2. W1209 temperature controller or something similar. Both 5 and 12 volt options are available. The dryer shown above uses 12 volts. A [W1209 controller](https://www.aliexpress.us/item/3256805851910105.html?src=google&src=google&albch=shopping&acnt=708-803-3821&slnk=&plac=&mtctp=&albbt=Google_7_shopping&gclsrc=aw.ds&albagn=888888&isSmbAutoCall=false&needSmbHouyi=false&src=google&albch=shopping&acnt=708-803-3821&slnk=&plac=&mtctp=&albbt=Google_7_shopping&gclsrc=aw.ds&albagn=888888&ds_e_adid=&ds_e_matchtype=&ds_e_device=c&ds_e_network=x&ds_e_product_group_id=&ds_e_product_id=en3256805851910105&ds_e_product_merchant_id=109144340&ds_e_product_country=US&ds_e_product_language=en&ds_e_product_channel=online&ds_e_product_store_id=&ds_url_v=2&albcp=19623912707&albag=&isSmbAutoCall=false&needSmbHouyi=false&gad_source=1&gclid=CjwKCAjwmYCzBhA6EiwAxFwfgEj1_OyVOn2Clk6kr6kFfY08jwdATWD7-ReEFJdhNmse2NiaI06uTRoCcZAQAvD_BwE&aff_fcid=e80e6b8574cd4b178f86be2d633626d3-1717620333549-01390-UneMJZVf&aff_fsk=UneMJZVf&aff_platform=aaf&sk=UneMJZVf&aff_trace_key=e80e6b8574cd4b178f86be2d633626d3-1717620333549-01390-UneMJZVf&terminal_id=14bb5c891ddb4baebb0909fb32ee2f45&afSmartRedirect=y&gatewayAdapt=glo2usa) can be purchased for a dollar or two plus a few dollars for shipping.
+3. Two 12-volt mini heat pads
+4. Wires (e.g. 22 awg thickness for connecting components) and connectors (twist connecters or screw terminals depending on your design preference)
+5. Two 12-volt DC computer fans
+   
