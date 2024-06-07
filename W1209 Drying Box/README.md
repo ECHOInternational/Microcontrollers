@@ -19,3 +19,26 @@ Air enters through two small air intake ports behind a fan on each side of the b
 8. Four short pieces of drip irrigation feeder tubing (or something similar) to serve as air intake ports, two behind each fan. The tubing of this dryer has an inner diameter of about 4 mm. 
 9. Bolts and nuts for mounting the fans.
    
+# Wiring
+## Heat pads
+Each 12-volt mini heat pad will have two wires coming out of it. These pads do not have polarity. Thus, for each heat pad, select one wire to be ground (-) and one to be power (+) and then be consistent in making all your wire connections. Since there are two heat pads, you will have two ground and two power wires. Connect the two ground wires together, along with a third wire. The third wire will connect with the ground wires of the fans and ultimately to the ground terminal of the W1209 temperature controller. 
+
+Connect the two positive wires of the heat pads along with a third wire that will connect to the W1209 temperature controller (as explained further down).
+
+## Fans
+Each 12-volt fan will have a ground (-) and power (+) wire. Connect the two ground wires and a third wire together. The third wire will connect to the ground wires of the heat pad and ultimately to the GND terminal of the temperature controller.
+
+## W1209 temperature controller
+There are four screw terminals on the temperature controller: K0 K1 +12V, GND  K0 is for controlling the load that you want to power on and off based on temperature, the mini heat pads in this case. K1 should connect with K0. The +12 and GND terminals are for connecting the temperature controller to the power supply (12-volt DC adaptor) and fans (since they need to stay on and run regardless of temperature). Make connections, then, as follows:
+
+|W1209 terminal|Connecting component | 
+|--------------|--------------------------|
+|K0            |Heat pad power (+)        |
+|K1            |K0 (directly or by connecting both K0 and K1 to fan power (+)|
+|+12V          |Power supply (+)  |
+|+12v          |Fan power (+)     |
+|GND           |Power supply (-) |
+|GND           |Fan ground (-)   |
+
+# Set the desired temperature
+Instructions for operating the W1209 temperature controller are documented by [MagicDuino](http://magicduino.com/Images/ItemsMedia/File/7186.pdf).
