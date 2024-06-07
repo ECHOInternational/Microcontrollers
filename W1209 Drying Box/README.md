@@ -6,7 +6,7 @@ The drying box is pictured below with its various components. Heat is generated 
 
 ![DryingBoxW1209](https://github.com/ECHOInternational/Microcontrollers/assets/69003593/898c4e29-8af6-4c41-9e38-8ff6ab2949eb)
 
-Air enters thruogh a small air intake port behind a fan on each side of the box. Just below each fan is a mini heat pad. Thus, incoming air is quickly heated and circulated via the fans within the box. Heated air and water vapor from moisture in the leaves or seeds is vented out the top. 
+Air enters through two small air intake ports behind a fan on each side of the box. Just below each fan is a mini heat pad. Thus, incoming air is quickly heated and circulated via the fans within the box. Heated air and water vapor from moisture in the leaves or seeds is vented out the top. It will work as long as the incoming air is cooler than the drying temperature. 
 
 # Materials
 1. An insulated box, such as the Styrofoam cooler pictured above.
@@ -15,7 +15,7 @@ Air enters thruogh a small air intake port behind a fan on each side of the box.
 4. Wires (e.g. 22 awg thickness) for connecting components and connectors (twist connecters or screw terminals depending on your design preference)
 5. Two 12-volt DC computer fans
 6. A 12-volt DC power adapter (the one used for this dryer is rated for a current draw of 5 amps, to make sure it can power the heat pads and fans adequately, but you may be able to generate sufficient heat with less current). The adaptor used for this dryer came with a barrel jack screw terminal for easy connection of the W1209 power and ground wires to the DC power adapter.
-7. Two short pieces of narrow-diameter PVC pipe for the vent.
-8. Two short pieces of drip irrigation feeder tubing (or something similar), one for each of the air intake ports.
+7. Two short pieces of narrow-diameter PVC pipe for the vent. This dryer uses PVC with an inner diameter of about 12 mm.
+8. Four short pieces of drip irrigation feeder tubing (or something similar) to serve as air intake ports, two behind each fan. The tubing of this dryer has an inner diameter of about 4 mm. 
 9. Bolts and nuts for mounting the fans.
    
