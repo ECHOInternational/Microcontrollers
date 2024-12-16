@@ -17,7 +17,7 @@ See this instructible for photos and more details on how to connect the diode to
 I used an [IRLB8721](https://www.digikey.com/en/products/detail/infineon-technologies/IRLB8721PBF/2127670) logic-level (meaning it can be turned off/on with 3.3v or 5v microcontrollers) mosfet, a small 5-amp hour [12-volt sealed lead acid battery](https://www.amazon.com/EXP1250-Terminals-Chamberlain-LiftMaster-Replacement/dp/B0010Z4MDK/ref=asc_df_B0010Z4MDK/?tag=hyprod-20&linkCode=df0&hvadid=693600725713&hvpos=&hvnetw=g&hvrand=4439266087684301916&hvpone=&hvptwo=&hvqmt=&hvdev=c&hvdvcmdl=&hvlocint=&hvlocphy=9190372&hvtargid=pla-448086693597&mcid=cc6af3a0f4a43aa0952472b662fdd46e&th=1), and a 12-volt normally closed [solenoid valve](https://www.adafruit.com/product/997?gad_source=1&gclid=EAIaIQobChMIm7Cb0LPSiQMV1rdaBR225jZJEAQYBCABEgLzSvD_BwE) commonly used in washing machines and dishwashers.
 
 1. Connect the gate pin of the mosfet to pin D5 of the Arduino Nano. To make sure the solenoid stays off when it is supposed to, you can connect one leg (wire) of a 10K (K = Kiloohom) resistor to the Gate pin of the mosfet and the other leg (wire) of the 10K resistor to ground (GND of the Arduino Nano)
-2. Connect the Drain pin of the mosfet to the negative terminal of the battery.
+2. Connect the Drain pin of the mosfet to the negative terminal of the solenoid.
 3. Connect the Source pin of the mosfet to ground (GND of the Arduino Nano).
 4. Connect the negative (black; ground) terminal of the battery to the ground (GND) pin of the Arduino Nano.
 5. Connect the positive (red; power) terminal of the battery to the positive side of the solenoid.
